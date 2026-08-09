@@ -1,0 +1,176 @@
+/* content */
+.text-header {
+	font-size: 10pt;
+	font-family: Arial;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+.icon
+{
+	padding-right: 0px;
+	padding-left: 0px;
+	padding-bottom: 7px;
+}
+.iconleft
+{
+	padding-right: 8px;
+}
+.iconfoot
+{
+	padding-right: 0px;
+	padding-left: 5px;
+}
+.pathway {
+	color: #FFFFFF;
+	font-size: 14pt;
+	font-family: Tahoma;
+	font-weight:bold;
+}
+.pageContent {
+	color: #9FA5B3;
+	font-size: 8pt;
+	font-family: Tahoma;
+	text-align: justify;
+}
+.pageContent_table {
+	padding-right:30px;padding-left:30px;padding-top:25px;padding-bottom:25px;
+}
+.pageContent a { 
+    font-size: 9pt;
+	color: #767676;
+	font-family: Tahoma;
+	}
+/* top elements */
+.company {
+	font-size: 14pt;
+	font-family: Tahoma;
+	color:#F9FFFD;
+	font-weight:bold;
+}
+.slogan {
+	font-size: 9pt;
+	font-family: Tahoma;
+	color: #000000;
+}
+.slogantable {
+	padding-right: 25px;
+}
+.copyright {
+	color: #B4C0CC;
+	font-size: 8pt;
+	font-family: Tahoma;
+	padding-right: 10px;
+	padding-bottom: 0px;
+	padding-left: 10px;
+	padding-top: 0px;
+}
+.logo{
+	font-size: 8pt;
+	padding-right: 10px;
+	padding-left: 10px;
+	font-family: Arial;
+	color: #000099;
+	font-weight: bold;
+}
+.logoword{
+	font-size: 18pt;
+	padding-right: 4px;
+	padding-left: 4px;
+	font-weight: bold;
+	color: #FFFFFF;
+	font-family: Arial;
+}
+.logowordtop{
+	font-size: 14pt;
+	padding-right: 4px;
+	padding-left: 4px;
+	font-weight: normal;
+	color: #FFFFFF;
+	font-family: Arial;
+}
+/*main menu*/
+.menu {
+	font-size: 8pt;
+	font-family: Tahoma;
+	color: #F9FFFD;
+	text-decoration: underline;
+	padding-bottom: 0px;
+	padding-top: 0px;
+	font-weight: normal;
+}
+.menua {
+	font-size: 8pt;
+	font-family: Tahoma;
+	color: #F9FFFD;
+	text-decoration: underline;
+	padding-bottom: 0px;
+	padding-top: 0px;
+	font-weight: bold;
+}
+.menutable{
+	padding-left: 6px;
+	padding-right: 10px;
+	padding-bottom: 4px;
+}
+/*submenu*/
+.submenutable{
+	padding-left: 0px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.submenua {
+	font-size: 8pt;
+	color: #F7FFFF;
+	font-family: Tahoma;
+	text-decoration: underline;
+	font-weight: normal;
+}
+.submenu {
+	font-size: 8pt;
+	color: #F7FFFF;
+	font-family: Tahoma;
+	font-weight: normal;
+	text-decoration: none;
+}
+.submenu-bg {
+	background-color: #848684;
+}
+
+.bmenu {
+	font-size: 8pt;
+	font-family: Tahoma;
+	color: #F7FFFF;
+	text-decoration:none;
+}
+.bmenua {
+	font-size: 8pt;
+	font-family: Tahoma;
+	color: #F7FFFF;
+	text-decoration:underline;
+}
+.menuline {
+	color: #D6D6D6;
+	text-decoration: none;
+	background-color: #D6D6D6;
+	width: 1px;
+	background-repeat: repeat-y;
+	background-position: center top;
+}
+.menu-hr { background-color: #FFFFFF; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.img_logo_cssclass1 { border:0;}
