@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /AGENTS.md
 
 Sitemap: https://www.priorityfieldmachining.com/sitemap.xml
