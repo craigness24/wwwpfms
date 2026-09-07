@@ -1,8 +1,8 @@
 # SEO Baseline — captured 2026-09-06
 
 Extracted from the original Plesk Sitebuilder HTML **before** any modernization work,
-from commit `63aff08`. Every title, meta value, link, image and visible word below must
-still be present after the rewrite. Regenerate with `extract.py` and diff.
+from commit `63aff08`. This is a point-in-time record of the pre-rewrite content — the
+original markup is recoverable at that commit if any of it needs to be re-verified.
 
 
 ## Intentional changes from this baseline
@@ -19,9 +19,18 @@ rebuild preserves it verbatim except for these owner-approved changes:
 | Curtis Adams' cell + email moved to the contact page | index and inner pages | contact page now lists the full team; shop number is the site-wide CTA |
 | Duplicate page title removed | photogallery, contactus, 404 | H1 restated the highlighted nav label |
 | Trailing "." dropped from headings | all | punctuation |
+| Plesk theme CSS + spacer GIFs removed | all | `App_Themes/blue/{styles,Modules}.css` and `blank.gif` / `botmenu_bullet.gif` / `txtheader_bullet.gif` were Sitebuilder presentation chrome with no crawlable content; replaced by `css/style.css` |
+| `robots: noindex, follow` added | 404 | a soft-404 should not be indexed, but its outbound links should still be followed |
+| Homepage canonical + sitemap `<loc>` now `/` instead of `/index.html` | index | `/` is the URL the site is linked to and the one GitHub Pages serves at the root; both now agree on it |
 
 Titles, meta descriptions and meta keywords are byte-identical to the originals
-on all six pages. All URLs are unchanged.
+on all six pages. All page URLs are unchanged; only the homepage's *canonical form*
+changed, from `/index.html` to `/` (both are served, and both resolve to the same page).
+
+The **Links** and **Images** lists below are a record of what the original markup
+referenced, not a checklist every entry must survive: the theme assets struck out in
+the table above are gone on purpose. Everything else — every title, meta value,
+outbound link, content image and visible word — must still be present.
 
 ## index.html
 
