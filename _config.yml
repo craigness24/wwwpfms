@@ -1,0 +1,7 @@
+# GitHub Pages runs Jekyll by default. This site is plain static HTML —
+# the only thing this file does is keep repo-only files out of the
+# published site. Do not add a .nojekyll file: that disables the build
+# and copies everything verbatim, exclusions included.
+exclude:
+  - AGENTS.md
+  - Dockerfile
