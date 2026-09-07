@@ -223,9 +223,20 @@ main { flex: 1 0 auto; }
 .call-btn-num { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; }
 
 /* ---------- 5. Navigation ------------------------------------------------
-   Five long labels. Mobile answer: a wrapping row of tab-style links — every
-   label is visible at once, nothing is parked off-screen behind a horizontal
-   scroll the owner rejected, and no JS disclosure is needed.
+   Five long labels. Mobile answer: a wrapping row of links — every label is
+   visible at once, nothing is parked off-screen behind a horizontal scroll
+   the owner rejected, and no JS disclosure is needed.
+
+   The active marker has to survive that wrap. An underline joined to the bar's
+   bottom edge only lands for items on the LAST row, so on a wrapped nav it
+   floats mid-block and reads as a divider instead of a tab — and whether it
+   looked right depended on where the label happened to wrap, which changes per
+   page and per width. So: a red left rule while the nav wraps, and the tab
+   underline only from 52em up, where the five labels genuinely fit one row.
+   Measured, not guessed: still two rows at 800px, one row from ~820px, so the
+   switch sits at 52em/832px. Erring high is the safe direction — a left rule
+   on a single row is merely a different marker, whereas a tab underline on a
+   wrapped nav is the broken state this is fixing.
    ------------------------------------------------------------------------- */
 .site-nav { background: var(--surface); border-bottom: 3px solid var(--line); }
 .site-nav .nav-list {
@@ -240,9 +251,10 @@ main { flex: 1 0 auto; }
   align-items: center;
   min-height: var(--tap);
   padding: 0.5rem 0.7rem;
-  border-radius: var(--r) var(--r) 0 0;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -3px;
+  border-radius: var(--r);
+  /* Row-independent marker: sits beside the label, so it reads the same on
+     any row of the wrap. Transparent on every item to keep widths equal. */
+  border-left: 3px solid transparent;
   color: var(--body);
   text-decoration: none;
   font-size: 0.92rem;
@@ -253,17 +265,39 @@ main { flex: 1 0 auto; }
 .site-nav .nav-list a:hover {
   background: var(--blue-wash);
   color: var(--blue-br);
-  border-bottom-color: var(--blue-lt);
 }
 .site-nav .nav-list a[aria-current="page"] {
   color: var(--ink);
   font-weight: 800;
-  border-bottom-color: var(--red);
+  border-left-color: var(--red);
+  /* One tone step up from the bar. Without it the rule sits in the gap between
+     two labels and reads as a divider rather than as this item's marker; the
+     raised ground binds the rule to the item it belongs to. Matches how the
+     rest of the page separates panels — by tone and an edge, not a shadow. */
+  background: var(--surface-2);
 }
 
 @media (min-width: 40em) {
   .call-btn { flex: 0 0 auto; min-height: var(--tap); }
   .site-nav .nav-list a { font-size: 0.95rem; padding-inline: 0.95rem; }
+}
+
+/* One row from here up, so the tab metaphor holds: the marker returns to the
+   bottom edge and joins the bar's own 3px border. */
+@media (min-width: 52em) {
+  .site-nav .nav-list a {
+    border-left: 0;
+    border-radius: var(--r) var(--r) 0 0;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+  }
+  .site-nav .nav-list a:hover { border-bottom-color: var(--blue-lt); }
+  /* The joined underline is unambiguous on one row, so the raised ground is
+     no longer doing any work — drop it and let the tab carry the state. */
+  .site-nav .nav-list a[aria-current="page"] {
+    background: none;
+    border-bottom-color: var(--red);
+  }
 }
 
 /* ---------- 6. Hero -------------------------------------------------------
