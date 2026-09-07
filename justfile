@@ -2,7 +2,7 @@
 
 image := "pfms-claude"
 # Persists /home/coder across runs, so Claude's login and settings survive.
-home_volume := "pfms-claude-home"
+home_volume := "claude-config"
 
 # List the available recipes.
 default:
