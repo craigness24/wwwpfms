@@ -1,0 +1,856 @@
+/* ============================================================================
+   Priority Field Machining Services — site stylesheet
+
+   Hero-led and from scratch, and dark end to end: one continuous near-black
+   surface from the header to the call bar, with panels raised a step out of
+   it by tone and a hairline rather than by shadow. No pattern anywhere — the
+   hero is a quiet radial fall-off in deep navy, nothing ruled, nothing
+   repeating. Light copy on dark, generous leading, a clear type scale, red
+   reserved strictly for actions.
+
+   Deliberately unlike Direction A: A is dense dark steel, square corners and
+   condensed uppercase; D is spacious, soft 6/10px radii, sentence-case
+   system-sans with a wide scale, and it leans navy rather than gunmetal.
+
+   PALETTE — measured contrast, sRGB, WCAG 2.2 (all body-size pairs >= 4.5:1)
+     --ground   #0D131A  page ground (near-black, cool — not pure #000)
+     --surface  #161F29  cards, header, raised panels
+     --surface-2 #1D2833 hover / second-step panel
+     --hero-hi  #0E3B63  hero radial highlight
+     --hero-mid #08243D  hero mid field
+     --hero-lo  #06192B  hero outer field
+     --deep     #0A1926  CTA strip + footer ground
+     --line     #2A3846  hairline on dark
+     --ink      #F2F6FA  headings   (17.19 on ground / 15.32 on surface)
+     --body     #E6EDF3  body copy  (15.80 on ground / 14.08 on surface)
+     --muted    #A8B9C8  secondary  (9.28 on ground / 8.27 on surface /
+                                     7.44 on surface-2 / 8.85 on deep)
+     --blue     #0A5CA8  BRAND BLUE — fills and edges only, never text on dark
+     --blue-lt  #7FB6EF  links/accents on dark (8.75 on ground / 7.80 on
+                         surface / 7.01 on surface-2 / 8.34 on deep)
+     --blue-br  #A9CEF6  link hover (11.42 on ground)
+     --red      #D22037  BRAND RED — button GROUND only (#fff on it = 5.25)
+     --red-dk   #A8172A  red hover  (#fff on it = 7.44)
+     --red-lt   #FF7A8A  red as TEXT on dark (7.47 on ground / 6.66 on surface)
+     focus ring uses --blue-lt on dark grounds (8.75 on ground)
+     #FFD11A yellow focus ring on the red/navy blocks (12.79 on ground)
+     #FFF0F2 on --red = 4.75   |  #C3D6E8 on --hero-hi = 7.73
+   ========================================================================== */
+
+/* ---------- 1. Tokens ---------------------------------------------------- */
+:root {
+  --ground:    #0d131a;
+  --surface:   #161f29;
+  --surface-2: #1d2833;
+  --hero-hi:   #0e3b63;
+  --hero-mid:  #08243d;
+  --hero-lo:   #06192b;
+  --deep:      #0a1926;
+  --line:      #2a3846;
+  --ink:       #f2f6fa;
+  --body:      #e6edf3;
+  --muted:     #a8b9c8;
+  --blue:      #0a5ca8;
+  --blue-lt:   #7fb6ef;
+  --blue-br:   #a9cef6;
+  --blue-wash: rgba(127, 182, 239, .12);
+  --red:       #d22037;
+  --red-dk:    #a8172a;
+  --red-lt:    #ff7a8a;
+
+  /* System stack only — no webfont, nothing to download, nothing to block. */
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+          Arial, sans-serif;
+
+  --wrap: 72rem;
+  --gut: clamp(1.1rem, 4.5vw, 2.5rem);
+  --tap: 44px;
+  /* Square. This is a machine shop — sharp edges read as machined metal and
+     precision; rounded corners read as consumer software. Kept as tokens so
+     the whole page stays consistent from one place. */
+  --r: 0;
+  --r-lg: 0;
+  /* Shadows barely read on a dark ground — panels separate by tone + hairline,
+     and these stay faint, only deepening the seam under a raised edge. */
+  --shadow: 0 1px 2px rgba(0, 0, 0, .35);
+  --shadow-lift: 0 10px 26px rgba(0, 0, 0, .45);
+  --callbar-h: 0px;
+}
+
+/* ---------- 2. Reset / base ---------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; background: var(--ground); }
+
+body {
+  margin: 0;
+  /* The mobile call bar is fixed over the bottom of the page; reserve its
+     height so the last line of the footer is never permanently covered. */
+  padding-bottom: var(--callbar-h);
+  background: var(--ground);
+  color: var(--body);
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.7;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--blue-lt); text-underline-offset: 0.15em; }
+a:hover { color: var(--blue-br); }
+
+p { margin: 0 0 1.15em; }
+
+h1, h2, h3 {
+  font-weight: 800;
+  letter-spacing: -0.018em;
+  line-height: 1.15;
+  margin: 0 0 0.55em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+h1 { font-size: clamp(1.8rem, 6vw, 3rem); line-height: 1.08; }
+h2 { font-size: clamp(1.35rem, 4.4vw, 2rem); }
+h3 { font-size: clamp(1.1rem, 3.2vw, 1.3rem); letter-spacing: -0.01em; }
+
+ul { margin: 0 0 1.3em; padding: 0; list-style: none; }
+
+address { font-style: normal; }
+strong { font-weight: 700; color: var(--ink); }
+
+::selection { background: var(--blue); color: #fff; }
+
+/* Focus: a light-blue ring, bright enough to sit clearly on every dark ground
+   here; it turns yellow on the red and navy blocks where blue would blend. */
+:focus-visible { outline: 3px solid var(--blue-lt); outline-offset: 3px; border-radius: var(--r); }
+.hero :focus-visible,
+.site-footer :focus-visible,
+.cta-strip :focus-visible,
+.call-btn:focus-visible,
+.callbar :focus-visible { outline-color: #ffd11a; }
+
+/* ---------- 3. Layout ---------------------------------------------------- */
+.wrap { width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gut); }
+
+main { flex: 1 0 auto; }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 60;
+  background: var(--red);
+  color: #fff;
+  font-weight: 700;
+  padding: 1rem 1.4rem;
+  border-radius: 0 0 var(--r) 0;
+  text-decoration: none;
+}
+.skip-link:focus { left: 0; }
+
+.ico { width: 1.25em; height: 1.25em; flex: none; fill: currentColor; }
+
+/* ---------- 4. Header / brand -------------------------------------------- */
+/* The header is one tone up from the page ground, closed with a hairline. */
+.site-header { background: var(--surface); border-bottom: 1px solid var(--line); }
+
+.header-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  padding-block: 0.9rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex: 1 1 15rem;
+  min-width: 0;
+  min-height: var(--tap);
+  text-decoration: none;
+  color: inherit;
+}
+.brand-mark { width: clamp(52px, 14vw, 76px); height: auto; }
+.brand-text { display: block; min-width: 0; }
+.brand-name {
+  display: block;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  font-size: clamp(0.98rem, 3.6vw, 1.3rem);
+  color: var(--ink);
+}
+.brand-kicker {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+.brand:hover .brand-name { color: var(--blue-lt); }
+
+/* Header call button: a red pill, full width on a phone. */
+.call-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  flex: 1 0 100%;
+  min-height: 52px;
+  padding: 0.55rem 1.2rem;
+  border-radius: var(--r);
+  background: var(--red);
+  color: #fff;
+  text-decoration: none;
+  transition: background-color .15s ease;
+}
+.call-btn:hover { background: var(--red-dk); color: #fff; }
+.call-btn .ico { width: 1.5rem; height: 1.5rem; }
+.call-btn-text { display: flex; flex-direction: column; line-height: 1.15; }
+.call-btn-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff0f2;              /* 4.75:1 on --red */
+}
+.call-btn-num { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; }
+
+/* ---------- 5. Navigation ------------------------------------------------
+   Five long labels. Mobile answer: a wrapping row of tab-style links — every
+   label is visible at once, nothing is parked off-screen behind a horizontal
+   scroll the owner rejected, and no JS disclosure is needed.
+   ------------------------------------------------------------------------- */
+.site-nav { background: var(--surface); border-bottom: 3px solid var(--line); }
+.site-nav .nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.4rem;
+  margin: 0;
+  padding-block: 0.35rem;
+}
+.site-nav .nav-list a {
+  display: flex;
+  align-items: center;
+  min-height: var(--tap);
+  padding: 0.5rem 0.7rem;
+  border-radius: var(--r) var(--r) 0 0;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -3px;
+  color: var(--body);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.25;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.site-nav .nav-list a:hover {
+  background: var(--blue-wash);
+  color: var(--blue-br);
+  border-bottom-color: var(--blue-lt);
+}
+.site-nav .nav-list a[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 800;
+  border-bottom-color: var(--red);
+}
+
+@media (min-width: 40em) {
+  .call-btn { flex: 0 0 auto; min-height: var(--tap); }
+  .site-nav .nav-list a { font-size: 0.95rem; padding-inline: 0.95rem; }
+}
+
+/* ---------- 6. Hero -------------------------------------------------------
+   No pattern, no lattice: a single soft radial in deep navy, brightest behind
+   the badge and falling off to near-black at the lower left, so the hero
+   reads as depth rather than as a texture and joins the page ground below it.
+   The badge is the subject — centred above the copy on a phone, beside it
+   from 52em up.
+   ------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  background-color: var(--hero-mid);
+  background-image:
+    radial-gradient(125% 95% at 76% 6%,
+      var(--hero-hi) 0%, var(--hero-mid) 48%, var(--hero-lo) 100%);
+  color: var(--body);
+  border-bottom: 4px solid var(--red);
+  overflow: hidden;
+}
+.hero-inner {
+  display: grid;
+  gap: clamp(1.25rem, 5vw, 2.75rem);
+  justify-items: center;
+  text-align: center;
+  padding-block: clamp(2.25rem, 8vw, 4.5rem);
+}
+
+/* The badge — large, and the first thing on the page. */
+.hero-mark { width: clamp(150px, 46vw, 220px); height: auto; }
+
+.hero-copy { max-width: 40rem; }
+
+.hero-eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8fc2f5;              /* 6.14:1 on the brightest point of the hero */
+}
+.hero h1 { color: #fff; font-size: clamp(1.9rem, 7vw, 3.15rem); margin-bottom: 0.5em; }
+.hero-lede {
+  margin: 0 0 1.75rem;
+  font-size: clamp(1.02rem, 3.2vw, 1.2rem);
+  line-height: 1.6;
+  color: #c3d6e8;              /* 7.73:1 on the brightest point of the hero */
+}
+
+.hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin: 0; }
+
+@media (min-width: 52em) {
+  .hero-inner {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    justify-items: start;
+    text-align: left;
+  }
+  .hero-actions { justify-content: flex-start; }
+}
+
+/* ---------- 7. Buttons ---------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap);
+  padding: 0.7rem 1.5rem;
+  border-radius: var(--r);
+  border: 2px solid transparent;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color .15s ease, color .15s ease,
+              border-color .15s ease, transform .15s ease;
+}
+.btn-call {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+  font-size: clamp(1rem, 3.4vw, 1.1rem);
+  padding-inline: 1.7rem;
+  box-shadow: 0 6px 22px rgba(210, 32, 55, .38);
+}
+.btn-call:hover { background: var(--red-dk); border-color: var(--red-dk); color: #fff; }
+.btn-ghost { background: transparent; border-color: var(--blue-lt); color: var(--blue-lt); }
+.btn-ghost:hover { background: var(--blue-wash); color: var(--blue-br); border-color: var(--blue-br); }
+/* On the hero the ghost button reads as a plain white outline. */
+.hero .btn-ghost { border-color: rgba(255, 255, 255, .55); color: #fff; }
+.hero .btn-ghost:hover { background: rgba(255, 255, 255, .12); color: #fff; border-color: #fff; }
+
+/* ---------- 8. Capability band -------------------------------------------
+   A spec block sitting on the hero's shoulder: four claims, hairline
+   dividers, tight leading. One tone up from the page ground.
+   ------------------------------------------------------------------------- */
+.capability { background: var(--surface); border-bottom: 1px solid var(--line); }
+.cap-list { display: grid; gap: 0; margin: 0; padding-block: 0.5rem; }
+.cap-list > li { padding: 0.85rem 0; border-top: 1px solid var(--line); line-height: 1.35; }
+.cap-list > li:first-child { border-top: 0; }
+.cap-list strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+.cap-list span { display: block; margin-top: 0.15rem; font-size: 0.88rem; color: var(--muted); }
+
+@media (min-width: 34em) {
+  .cap-list { grid-template-columns: repeat(2, 1fr); column-gap: 2rem; }
+  .cap-list > li:nth-child(2) { border-top: 0; }
+}
+@media (min-width: 62em) {
+  .cap-list { grid-template-columns: repeat(4, 1fr); column-gap: 0; padding-block: 1.35rem; }
+  .cap-list > li { border-top: 0; border-left: 1px solid var(--line); padding: 0.1rem 1.6rem; }
+  .cap-list > li:first-child { padding-left: 0; border-left: 0; }
+}
+
+/* ---------- 9. Sections + prose ------------------------------------------ */
+.section { padding-block: clamp(2.25rem, 7vw, 4rem); }
+.section + .section { padding-top: 0; }
+
+main h1 { max-width: 22ch; }
+main > .section:first-child h1 { margin-top: 0.25rem; }
+
+.lede {
+  margin: 0 0 1.9rem;
+  max-width: 56ch;
+  font-size: clamp(1.05rem, 3.2vw, 1.25rem);
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+/* Section rules use the lighter blue — brand blue at full strength disappears
+   into the page ground as a 3px line. */
+.prose h2 { padding-top: 1.4rem; border-top: 3px solid var(--blue-lt); max-width: 24ch; }
+.prose p { max-width: 70ch; font-size: clamp(1rem, 2.9vw, 1.06rem); }
+.prose em strong,
+.prose strong em { font-style: normal; color: var(--blue-lt); }
+
+/* ---------- 10. Service cards --------------------------------------------
+   Whole-card affordance: the heading link stretches over the card, so the
+   entire block is the hit area. On dark the card separates by tone and a
+   hairline; hover raises it another tone and fills the accent edge red.
+   ------------------------------------------------------------------------- */
+.card-grid { display: grid; gap: 1.1rem; margin: 0; grid-template-columns: 1fr; }
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 1.4rem 1.4rem 1.5rem;
+  box-shadow: var(--shadow);
+  transition: box-shadow .18s ease, transform .18s ease,
+              border-color .18s ease, background-color .18s ease;
+}
+/* The accent edge: a blue bar down the left that turns red on interaction. */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: auto auto 0 0;
+  top: 0;
+  width: 4px;
+  border-radius: var(--r-lg) 0 0 var(--r-lg);
+  background: var(--blue-lt);
+  opacity: .5;
+  transition: opacity .18s ease, background-color .18s ease;
+}
+.card h2 { font-size: clamp(1.15rem, 3.8vw, 1.4rem); margin: 0 0 0.5rem; }
+.card h2 a { color: var(--ink); text-decoration: none; }
+/* Stretch the link over the card without trapping the text selection. */
+.card h2 a::after { content: ""; position: absolute; inset: 0; border-radius: var(--r-lg); }
+.card p { margin: 0; color: var(--muted); font-size: 0.97rem; }
+
+.card:hover,
+.card:focus-within {
+  transform: translateY(-3px);
+  background: var(--surface-2);
+  border-color: #3b4c5e;
+  box-shadow: var(--shadow-lift);
+}
+.card:hover::before,
+.card:focus-within::before { opacity: 1; background: var(--red); }
+.card:hover h2 a { color: var(--blue-br); }
+.card h2 a:focus-visible { outline-offset: 6px; }
+
+@media (min-width: 42em) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 62em) { .card-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* ---------- 11. Service lists / grids (inner pages) ----------------------- */
+.svc-list { margin: 0 0 2rem; max-width: 70ch; }
+.svc-list > li {
+  position: relative;
+  padding: 0.55rem 0 0.55rem 1.75rem;
+  border-bottom: 1px solid var(--line);
+}
+.svc-list > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.15em;
+  width: 0.75rem;
+  height: 2px;
+  background: var(--red-lt);
+}
+@media (min-width: 44em) {
+  .svc-list { max-width: none; columns: 2; column-gap: 3rem; }
+  .svc-list > li { break-inside: avoid; }
+}
+@media (min-width: 68em) { .svc-list { columns: 3; } }
+
+.svc-grid { display: grid; gap: 0.7rem; margin: 0 0 2rem; grid-template-columns: 1fr; }
+.svc-grid > li {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--blue);
+  border-radius: var(--r);
+  padding: 0.8rem 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.4;
+}
+@media (min-width: 42em) { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 62em) { .svc-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* ---------- 12. Gallery ---------------------------------------------------
+   HARD CONSTRAINT: every photo is 320x240 native and blurs if enlarged. So
+   the columns are a fixed 320px track, never a stretchy 1fr — the images sit
+   at native size on desktop and only ever scale DOWN on a narrow phone. Odd
+   counts are centred rather than stretched.
+
+   The photos are bright shop-floor JPEGs, so on a dark page they would glare
+   as cut-out rectangles. They are matted instead: a raised card, a neutral
+   inner mat, and a 1px inset ring drawn ON the image edge with a negative
+   outline offset — which frames the photo without changing its layout box or
+   touching a single pixel of the photo itself (no dimming, no filter, no
+   overlay).
+   ------------------------------------------------------------------------- */
+.gal-head {
+  margin-top: 2.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
+  font-size: clamp(1.15rem, 3.6vw, 1.5rem);
+}
+.gal-head::before {
+  content: "";
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-right: 0.6rem;
+  border: 2px solid var(--red-lt);
+  vertical-align: baseline;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, min(100%, 320px));
+  justify-content: center;
+  gap: 1.25rem;
+  margin: 0 0 1.75rem;
+  padding: 0;
+}
+.shot {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 0.5rem 0.5rem 0.15rem;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.shot img {
+  width: 100%;
+  height: auto;
+  border-radius: 0;
+  background: var(--surface-2);
+  /* Negative offset draws the ring inside the image edge — no layout impact,
+     so the photo still renders at its native 320px on a wide screen. */
+  outline: 1px solid rgba(230, 237, 243, .22);
+  outline-offset: -1px;
+}
+.shot .cap {
+  display: block;
+  padding: 0.6rem 0.35rem 0.7rem;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+/* Homepage teaser: same fixed tracks, left-aligned inside the measure. */
+@media (min-width: 62em) {
+  .gallery-teaser { justify-content: start; }
+}
+.proof h2 { padding-top: 1.4rem; border-top: 3px solid var(--blue-lt); }
+
+/* ---------- 13. CTA strip ------------------------------------------------- */
+.cta-strip {
+  background: var(--deep);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  color: var(--body);
+  padding-block: clamp(1.75rem, 5.5vw, 2.75rem);
+  margin-top: clamp(2rem, 6vw, 3.25rem);
+}
+.cta-head { color: var(--ink); font-size: clamp(1.4rem, 5vw, 2.15rem); margin-bottom: 1.6rem; max-width: 24ch; }
+.cta-intro { max-width: 60ch; color: var(--muted); }
+
+.cta-grid { display: grid; gap: 0.9rem; grid-template-columns: 1fr; }
+.cta-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--blue-lt);
+  padding: 1rem 1.1rem;
+}
+.cta-name {
+  margin: 0 0 0.6rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.phone-list { margin: 0 0 1rem; }
+.phone-list > li + li { border-top: 1px solid var(--line); }
+.phone-list a,
+.phone-list > li:not(:has(a)) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.15rem 1rem;
+  min-height: var(--tap);
+  padding: 0.3rem 0.35rem;
+  border-radius: 0;
+  text-decoration: none;
+  color: var(--ink);
+}
+.phone-list a { transition: background-color .15s ease, color .15s ease; }
+.phone-list a:hover { background: var(--surface-2); color: var(--blue-br); }
+.ph-num { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.015em; }
+.phone-list > li:not(:has(a)) .ph-num { color: var(--muted); font-weight: 700; }
+.ph-lbl {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.cta-addr {
+  font-size: clamp(1.15rem, 4.2vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--ink);
+  padding-bottom: 0.9rem;
+  margin-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+.cta-note,
+
+@media (min-width: 46em) { .cta-grid { grid-template-columns: 1fr 1fr; } }
+
+/* ---------- 14. Footer ---------------------------------------------------- */
+.site-footer { background: var(--deep); color: var(--muted); border-top: 4px solid var(--red); flex: none; }
+.foot-nav { border-bottom: 1px solid var(--line); }
+.foot-nav .nav-list { display: flex; flex-wrap: wrap; gap: 0 0.4rem; margin: 0; padding-block: 0.4rem; }
+.foot-nav .nav-list a {
+  display: flex;
+  align-items: center;
+  min-height: var(--tap);
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--r);
+  color: var(--body);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.foot-nav .nav-list a:hover {
+  background: var(--surface);
+  color: var(--blue-br);
+  text-decoration: underline;
+}
+.foot-nav .nav-list a[aria-current="page"] { color: var(--ink); font-weight: 800; }
+
+.foot-body { padding-block: 1.75rem 2.25rem; }
+
+.foot-thanks { margin-bottom: 1rem; font-size: 1.05rem; font-weight: 800; color: var(--ink); }
+
+.foot-social { margin-bottom: 1.35rem; }
+.foot-social .fb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: var(--tap);
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  color: var(--body);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+.foot-social .fb:hover { background: var(--surface); border-color: var(--blue-lt); color: var(--blue-br); }
+.foot-social .ico { width: 1.2rem; height: 1.2rem; }
+
+.foot-legal {
+  margin-bottom: 0.8rem;
+  max-width: 78ch;
+  font-size: 0.84rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.foot-legal a { color: var(--blue-lt); }
+.foot-legal a:hover { color: var(--blue-br); }
+
+/* ---------- 15. Persistent mobile call bar --------------------------------
+   Phones only. Fixed to the bottom edge, full width, solid red, one large
+   tap target. `body` carries a matching bottom padding (--callbar-h) while
+   the bar exists, so it never permanently covers content; both the bar and
+   the padding are switched off together at 48em.
+   ------------------------------------------------------------------------- */
+.callbar {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 40;
+  background: var(--red);
+  border-top: 1px solid rgba(0, 0, 0, .35);
+  box-shadow: 0 -6px 20px rgba(0, 0, 0, .5);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.callbar a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: 0.6rem 1rem;
+  color: #fff;
+  text-decoration: none;
+  font-size: clamp(1rem, 4.4vw, 1.15rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+.callbar a:hover,
+.callbar a:active { background: var(--red-dk); color: #fff; }
+
+@media (max-width: 47.99em) {
+  :root { --callbar-h: 4.25rem; }
+}
+@media (min-width: 48em) {
+  .callbar { display: none; }
+}
+
+/* ---------- 16. Misc ------------------------------------------------------ */
+img.statcounter, .statcounter { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .card:hover,
+  .card:focus-within { transform: none; }
+}
+
+/* ---------- 17. Contact page ---------------------------------------------
+   The contact page carries its own body rather than leaning on the shared CTA
+   strip. The people grid auto-fits, so adding contacts needs no CSS change.
+   ------------------------------------------------------------------------- */
+.contacts { padding-top: 0; }
+
+.contact-grid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  margin: 0 0 2rem;
+}
+.contact-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--blue-lt);
+  padding: 1rem 1.1rem;
+}
+.con-name {
+  margin: 0 0 0.15rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+.con-role {
+  margin: 0 0 0.6rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.con-name + .phone-list,
+.con-role + .phone-list {
+  margin-top: 0.6rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.35rem;
+}
+/* Shelby has no cell, so the email follows the role directly. */
+.con-role + .con-email { margin-top: 0.6rem; }
+.con-email {
+  margin: 0.5rem 0 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+.con-email a { color: var(--blue-lt); }
+.con-email a:hover { color: var(--blue-br); }
+
+.loc-grid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+}
+.loc {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--line);
+  padding: 1rem 1.1rem;
+}
+.loc h3 {
+  margin: 0 0 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.82rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.loc .cta-addr { margin: 0; color: var(--ink); }
+.loc .cta-note { margin: 0.7rem 0 0; font-size: 0.9rem; color: var(--muted); }
+
+/* Shop hours block on the contact page. */
+.hours {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.loc .hours + .cta-note { margin-top: 0.7rem; }
+
+/* On-call line under the shop hours — this is the differentiator, so it reads
+   as a statement rather than a footnote. */
+.on-call {
+  margin: 0.7rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--line);
+  color: var(--red-lt);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Landing page contacts: a single shop card, so it shouldn't stretch to the
+   full measure the two-card grid uses. */
+.cta-single { grid-template-columns: 1fr; max-width: 34rem; }
+
+/* Contact Us sits above the shop card: the shop number handles "call now",
+   this handles "I need a specific person". */
+.cta-more { margin: 0 0 1.5rem; }
+
+/* Shop hours block on the contact page. */
+.hours {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.loc .hours + .cta-note { margin-top: 0.7rem; }
+
+/* On-call line under the shop hours — this is the differentiator, so it reads
+   as a statement rather than a footnote. */
+.on-call {
+  margin: 0.7rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--line);
+  color: var(--red-lt);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
