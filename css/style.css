@@ -662,9 +662,13 @@ main > .section:first-child h1 { margin-top: 0.25rem; }
   margin-bottom: 0.9rem;
   border-bottom: 1px solid var(--line);
 }
-.cta-note,
-
-@media (min-width: 46em) { .cta-grid { grid-template-columns: 1fr 1fr; } }
+/* `.cta-note,` sat here as a dangling selector — a trailing comma with no
+   declaration block. The parser treated the following @media as part of that
+   broken selector list and discarded the whole thing, so the two-column rule
+   it contained never applied on any page. The single column it left behind is
+   the layout we want, so the dead selector and the unreachable media query are
+   both removed rather than repaired: .cta-grid stays one column at every
+   width, now by intent rather than by parse error. */
 
 /* ---------- 14. Footer ---------------------------------------------------- */
 .site-footer { background: var(--deep); color: var(--muted); border-top: 4px solid var(--red); flex: none; }
