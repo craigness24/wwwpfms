@@ -1,0 +1,51 @@
+<!doctype html>
+<!-- Source for images/share-card.png (the og:image). Not linked from the site
+     and marked noindex; it exists so the card can be regenerated rather than
+     hand-edited as pixels. Uses the site's own hero gradient, brand colors and
+     square corners (--r: 0). Render from the repo root with:
+
+       chromium --headless --no-sandbox --hide-scrollbars \
+         --force-device-scale-factor=1 --window-size=1200,630 \
+         --screenshot=images/share-card.png images/share-card.src.html
+-->
+<html><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<title>Share card source (1200x630) - not a site page</title><style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #08243d;
+    background-image: radial-gradient(125% 95% at 76% 6%, #0e3b63 0%, #08243d 48%, #06192b 100%);
+    border-bottom: 8px solid #d22037;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 56px;
+    padding: 64px 72px;
+    overflow: hidden;
+  }
+  .mark { width: 380px; height: auto; display: block; }
+  .eyebrow {
+    font-size: 22px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: #8fc2f5; margin-bottom: 18px;
+  }
+  h1 {
+    color: #fff; font-size: 64px; font-weight: 800;
+    letter-spacing: -0.018em; line-height: 1.08; margin-bottom: 18px;
+  }
+  .lede { font-size: 27px; line-height: 1.5; color: #c3d6e8; margin-bottom: 34px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #d22037; color: #fff; border-radius: 0;
+    padding: 20px 40px; font-size: 30px; font-weight: 800; letter-spacing: -0.01em;
+  }
+</style></head>
+<body>
+  <img class="mark" src="pfms-logo.png" alt="">
+  <div>
+    <p class="eyebrow">Corpus Christi, Texas &nbsp;·&nbsp; 25+ Years</p>
+    <h1>On-site Field Machining</h1>
+    <p class="lede">Emergency or scheduled · Nationwide</p>
+    <span class="btn">Call 24/7 — (361) 653-1098</span>
+  </div>
+</body></html>
